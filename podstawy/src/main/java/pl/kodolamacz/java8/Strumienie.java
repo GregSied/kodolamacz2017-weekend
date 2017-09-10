@@ -1,9 +1,6 @@
 package pl.kodolamacz.java8;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -98,6 +95,40 @@ public class Strumienie {
 
         Stream<List<Person>> listStream = persons.stream().map(person -> person.getFriends());
 
+        Optional<String> reduce = list.stream().reduce((s1, s2) ->
+                s1 + "@" + s2);
+
+        reduce.ifPresent(s -> System.out.println(s));
+
+        String reduce1 = list.stream().reduce("", (s1, s2) ->
+                s1 + "@" + s2);
+        System.out.println(reduce1);
+
+
+        AverageCalculator reduce2 = Arrays.asList(3.0, 5.0, 8.0, 3.12, 66.0).stream()
+                .reduce(new AverageCalculator(),
+                        (ac, v) -> ac.add(v),
+                        (ac1, ac2) -> ac1.add(ac2)
+                );
+
+        System.out.println(reduce2.sum/reduce2.count);
+    }
+
+    static class AverageCalculator{
+        double sum = 0;
+        int count = 0;
+
+        AverageCalculator add(Double v){
+            sum += v;
+            count++;
+            return this;
+        }
+
+        AverageCalculator add(AverageCalculator other){
+            sum += other.sum;
+            count += other.count;
+            return this;
+        }
     }
 
     private static String addSurname(String s) {
