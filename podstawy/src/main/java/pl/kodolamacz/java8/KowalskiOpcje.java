@@ -1,5 +1,7 @@
 package pl.kodolamacz.java8;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -61,9 +63,10 @@ class StreetGetter implements Function<Address, Optional<String>>{
     }
 }
 
-class Person{
+class Person implements Comparable<Person>{
     private String name;
     private Address address;
+    private List<Person> friends = new ArrayList<>();
 
     public Person(String name) {
         this.name = name;
@@ -77,6 +80,24 @@ class Person{
         // warunek ? jesliTrue : jesliFalse
         // value == null ? empty() : of(value);
         return Optional.ofNullable(address);
+    }
+
+    void addFriend(Person person){
+        this.friends.add(person);
+    }
+
+    public List<Person> getFriends() {
+        return friends;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        return name.compareTo(o.name);
     }
 }
 
