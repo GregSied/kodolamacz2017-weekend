@@ -1,7 +1,13 @@
 package pl.kodolamacz;
 
+import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.math.BigDecimal;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 
 
 public class CalculatorTest {
@@ -43,7 +49,12 @@ public class CalculatorTest {
         int result = calculator.multiply(a,b);
 
         // then
-        Assert.assertEquals(35, result);
+        Assert.assertEquals(
+                "Wynik mnożenia powinien być 35",
+                35, result);
+//        Assert.assertEquals(0.3, .1+.1+.1, 1e-18);
+
+        Assert.assertThat(result, is(equalTo(35)));
     }
 
 }
