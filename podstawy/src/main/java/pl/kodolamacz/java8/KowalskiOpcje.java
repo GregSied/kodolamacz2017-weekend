@@ -16,6 +16,9 @@ public class KowalskiOpcje {
         if(street.isPresent()){
             System.out.println("Mieszka na ulicy "+street.get());
         }
+
+        printFirstThreeLettersOfName(bartek);
+        printFirstThreeLettersOfName(Optional.of(new Person("Al")));
     }
 
     public static void lambda(){
@@ -26,10 +29,19 @@ public class KowalskiOpcje {
                 .flatMap(Person::getAddress)
                 .flatMap(Address::getStreet);
 
-        Optional<String> s = bartek
-                .map(person -> person.getName())
+        printFirstThreeLettersOfName(bartek);
+    }
+
+    private static void printFirstThreeLettersOfName(Optional<Person> person) {
+        String streetPrefix = "ul";
+
+        Optional<String> s = person
+                .map(Person::getName)
                 .filter(name -> name.length() >= 3)
                 .map(name -> name.substring(0, 3));
+        s.ifPresent(str ->
+            System.out.println(streetPrefix + str)
+        );
     }
 
 }
